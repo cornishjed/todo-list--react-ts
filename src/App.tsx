@@ -4,8 +4,8 @@ import data from "./data.json";
 import "./css/App.css";
 
 import { Header } from "./ts/Header.tsx";
-import { Form } from "./ts/Form";
-import List from "./ts/Form";
+import { Form } from "./ts/Form.tsx";
+import { Grid } from "./ts/Grid.tsx"
 
 let nextId: number = data.length;
 
