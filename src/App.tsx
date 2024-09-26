@@ -3,8 +3,8 @@ import { useState } from "react";
 import data from "./data.json";
 import "./css/App.css";
 
-import Header from "./ts/Header";
-import Form from "./ts/Form";
+import { Header } from "./ts/Header.tsx";
+import { Form } from "./ts/Form";
 import List from "./ts/Form";
 
 let nextId: number = data.length;
