@@ -16,7 +16,7 @@ interface ToDo {
 }
 
 function App() {
-  const [toDos, setToDos] = useState(data);
+  const [toDos, setToDos] = useState<Array<ToDo>>(data);
 
   // keep state altering functions close to state then pass as props
   function handleSubmit(title: string, description: string): void {
