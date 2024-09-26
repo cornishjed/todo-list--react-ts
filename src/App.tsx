@@ -21,7 +21,7 @@ function App() {
   // keep state altering functions close to state then pass as props
   function handleSubmit(title: string, description: string): void {
     let newToDo: ToDo = {
-      id: nextId++,
+      id: ++nextId,
       title: title,
       description: description,
     };
