@@ -19,8 +19,8 @@ export interface ToDoItem {
 
 function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
-  const [title, setTitle] = useState<string>();
-  const [description, setDescription] = useState<string>();
+  const [title, setTitle] = useState<string>(""); // Initialize to avoid "Component Changing Uncontrolled" error
+  const [description, setDescription] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
   const [editId, setEditId] = useState<number>();
 
@@ -59,7 +59,7 @@ function App() {
     setEditing(true);
     setEditId(toDos[index].id)
     setTitle(toDos[index].title);
-    setDescription(toDos[index].description)
+    setDescription(toDos[index].description!)
   }
 
   function handleDelete(id: number): void {
@@ -75,7 +75,7 @@ function App() {
       <Header />
       <div className="content">
         <Form  id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
-        <Grid toDos={toDos} onDeleteToDo={handleDelete} onEditToDo={handleEdit}/>
+        <Grid toDos={toDos} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
       </div>
     </div>
   );

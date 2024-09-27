@@ -37,7 +37,7 @@ export const Form: React.FC<Props> = ({ title, description, editing, setTitle, s
           {editing ? onSubmitToDo(title, description) : onSubmitToDo(title, description, id)} clearForm();
         }}
       >
-        Create
+        {editing ? "Apply" : "Create"}
       </button>
     </div>
   );
