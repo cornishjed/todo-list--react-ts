@@ -8,10 +8,11 @@ interface Props {
     readonly id: number;
     title: string;
     children: oneChild; // description
-    onDeleteToDo: (id: number) => void;
+    onEditToDo: Function;
+    onDeleteToDo: Function;
 }
 
-export const ToDo: React.FC<Props> = ({id, onDeleteToDo, title, children}) => {
+export const ToDo: React.FC<Props> = ({id, onEditToDo, onDeleteToDo, title, children}) => {
     const [isComplete, setIsComplete] = useState<boolean>(false);
 
     return (
@@ -20,6 +21,7 @@ export const ToDo: React.FC<Props> = ({id, onDeleteToDo, title, children}) => {
             <p>{children}</p>
             <div className='toDo__card-buttons'>
                 <button onClick={() => onDeleteToDo(id)}>Delete</button>
+                <button onClick={() => onEditToDo(id)}>Edit</button>
                 <button onClick={() => setIsComplete(!isComplete)}>Mark {isComplete ? "Incomplete" : "Complete"}</button>
             </div>
         </div>

@@ -1,14 +1,15 @@
-import { useState } from "react";
-
 import "../css/Form.css";
 
 interface Props {
+  title: string | undefined;
+  description: string | undefined;
+  setTitle: Function;
+  setDescription: Function;
     onSubmitToDo: Function
 }
 
-export const Form: React.FC<Props> = ({onSubmitToDo}) => {
-  const [title, setTitle] = useState<string>();
-  const [description, setDescription] = useState<string>();
+export const Form: React.FC<Props> = ({title, description, setTitle, setDescription, onSubmitToDo}) => {
+  
 
   function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setTitle(e.target.value);

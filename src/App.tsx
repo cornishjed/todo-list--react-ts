@@ -19,16 +19,35 @@ export interface ToDoItem {
 
 function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
+  const [title, setTitle] = useState<string>();
+  const [description, setDescription] = useState<string>();
 
   // keep state altering functions close to state then pass as props
-  function handleSubmit(title: string, description: string): void {
-    let newToDo: ToDoItem = {
-      id: ++nextId,
-      title: title,
-      description: description,
-    };
+  function handleSubmit(title: string, description: string, id?: number): void {
+    if (!id) {
+      let newToDo: ToDoItem = {
+        id: ++nextId,
+        title: title,
+        description: description,
+      };
+      setToDos([...toDos, newToDo]);
+    } else {
+      let updatedToDo: ToDoItem = {
+        id: id,
+        title: title,
+        description: description,
+      };
+      setToDos([...toDos, updatedToDo]);
+    }
+  }
 
-    setToDos([...toDos, newToDo]);
+  function handleEdit(id: number): ToDoItem {
+    const index: number = toDos.findIndex((item) => item.id === id);
+    console.log("handleEdit()")
+    console.log(index);
+    setTitle(toDos[index].title);
+    setDescription(toDos[index].description)
+    return toDos[index];
   }
 
   function handleDelete(id: number): void {
@@ -43,8 +62,8 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <Form onSubmitToDo={handleSubmit} />
-        <Grid toDos={toDos} onDeleteToDo={handleDelete} />
+        <Form  title={title} description={description} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit}/>
+        <Grid toDos={toDos} onDeleteToDo={handleDelete} onEditToDo={handleEdit}/>
       </div>
     </div>
   );
