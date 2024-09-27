@@ -11,7 +11,7 @@ let nextId: number = data.length;
 type oneChild = React.ReactNode;
 
 export interface ToDoItem {
-  readonly id: number;
+  id: number | undefined;
   title: string;
   description?: string;
   children?: oneChild;
@@ -19,16 +19,58 @@ export interface ToDoItem {
 
 function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
+  const [title, setTitle] = useState<string>(""); // Initialize to avoid "Component Changing Uncontrolled" error
+  const [description, setDescription] = useState<string>("");
+  const [editing, setEditing] = useState<boolean>(false);
+  const [editId, setEditId] = useState<number>();
+
+  function clearForm(): void {
+    setTitle("");
+    setDescription("");
+  }
 
   // keep state altering functions close to state then pass as props
-  function handleSubmit(title: string, description: string): void {
-    let newToDo: ToDoItem = {
-      id: ++nextId,
-      title: title,
-      description: description,
-    };
+  function handleSubmit(): void {
+    if (!editing) {
+      let newToDo: ToDoItem = {
+        id: ++nextId,
+        title: title,
+        description: description,
+      };
+      setToDos([...toDos, newToDo]);
+    } else {
+      let updatedToDo: ToDoItem = {
+        id: editId,
+        title: title,
+        description: description,
+      };
 
-    setToDos([...toDos, newToDo]);
+      let toDosCpy: ToDoItem[] = [...toDos].filter((item) => item.id !== editId);
+
+      toDosCpy.push(updatedToDo);
+
+      // sort By Id
+      toDosCpy.sort((a, b) => a.id! - b.id!); // '!' tells TS you're sure it's defined
+
+      setToDos(toDosCpy);
+      setEditId(undefined);
+      setEditing(false);
+      clearForm();
+    }
+  }
+
+  function handleEdit(id: number | boolean): void {
+    if (editing && id === editId) {
+      setEditing(false);
+      clearForm();
+    } else {
+      const index: number = toDos.findIndex((item) => item.id === id);
+
+      setEditing(true);
+      setEditId(toDos[index].id);
+      setTitle(toDos[index].title);
+      setDescription(toDos[index].description!);
+    }
   }
 
   function handleDelete(id: number): void {
@@ -43,8 +85,8 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <Form onSubmitToDo={handleSubmit} />
-        <Grid toDos={toDos} onDeleteToDo={handleDelete} />
+        <Form title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
+        <Grid toDos={toDos} editing={editing} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
       </div>
     </div>
   );

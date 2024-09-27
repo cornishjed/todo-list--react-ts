@@ -1,18 +1,23 @@
 .toDo__card {
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 0 15px;
-    background-color: aliceblue;
-    width: 282px;
-    height: 182px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 20px;
+  padding: 0 15px;
+  background-color: rgb(236, 243, 250);
+  width: 282px;
+  height: 182px;
 
-    &.complete {
-        background-color: greenyellow;
-    }
+  &.complete {
+    background-color: rgb(0, 184, 31);
+  }
+
+  &.editing,
+  .editing.complete {
+    background-color: rgb(94, 171, 238);
+  }
 }
 
 .toDo__card-buttons {
-    display: flex;
-    width: fit-content;
-    gap: 1rem;;
+  display: flex;
+  width: fit-content;
+  gap: 1rem;
 }

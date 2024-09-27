@@ -1,27 +1,30 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import "../css/ToDo.css";
 
-type oneChild = React.ReactNode
+type oneChild = React.ReactNode;
 
 interface Props {
-    readonly id: number;
-    title: string;
-    children: oneChild; // description
-    onDeleteToDo: (id: number) => void;
+  readonly id: number | undefined;
+  title: string;
+  editing: boolean;
+  children: oneChild; // description
+  onEditToDo: Function;
+  onDeleteToDo: Function;
 }
 
-export const ToDo: React.FC<Props> = ({id, onDeleteToDo, title, children}) => {
-    const [isComplete, setIsComplete] = useState<boolean>(false);
+export const ToDo: React.FC<Props> = ({ id, editing, onEditToDo, onDeleteToDo, title, children }) => {
+  const [isComplete, setIsComplete] = useState<boolean>(false);
 
-    return (
-        <div className={'toDo__card ' + (isComplete && "complete")}>
-            <h1>{title}</h1>
-            <p>{children}</p>
-            <div className='toDo__card-buttons'>
-                <button onClick={() => onDeleteToDo(id)}>Delete</button>
-                <button onClick={() => setIsComplete(!isComplete)}>Mark {isComplete ? "Incomplete" : "Complete"}</button>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className={"toDo__card " + (editing ? "editing" : "") + " " + (isComplete ? "complete" : "")}>
+      <h1>{title}</h1>
+      <p>{children}</p>
+      <div className="toDo__card-buttons">
+        <button onClick={() => onDeleteToDo(id)}>Delete</button>
+        <button onClick={() => onEditToDo(id)}>{editing ? "Cancel" : "Edit"}</button>
+        <button onClick={() => setIsComplete(!isComplete)}>Mark {isComplete ? "Incomplete" : "Complete"}</button>
+      </div>
+    </div>
+  );
+};

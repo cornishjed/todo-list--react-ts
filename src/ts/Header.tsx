@@ -6,4 +6,4 @@ export const Header: React.FC = () => {
       <h1>To-Do List</h1>
     </div>
   );
-}
+};
