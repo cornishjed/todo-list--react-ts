@@ -11,7 +11,7 @@ let nextId: number = data.length;
 type oneChild = React.ReactNode;
 
 export interface ToDoItem {
-  readonly id: number | undefined;
+  id: number | undefined;
   title: string;
   description?: string;
   children?: oneChild;
@@ -39,20 +39,27 @@ function App() {
         title: title,
         description: description,
       };
-      setToDos([...toDos.filter(item => item.id !== editId), updatedToDo]);
+
+      let toDosCpy: ToDoItem[] = [...toDos].filter(item => item.id !== editId);
+
+      toDosCpy.push(updatedToDo)
+
+      // sort By Id
+      toDosCpy.sort((a, b) => a.id! - b.id!); // '!' tells TS you're sure it's defined
+
+      setToDos(toDosCpy);
+      setEditId(undefined);
+      setEditing(false);
     }
   }
 
-  function handleEdit(id: number): ToDoItem {
+  function handleEdit(id: number): void {
     const index: number = toDos.findIndex((item) => item.id === id);
 
     setEditing(true);
     setEditId(toDos[index].id)
-    console.log("handleEdit()")
-    console.log(index);
     setTitle(toDos[index].title);
     setDescription(toDos[index].description)
-    return toDos[index];
   }
 
   function handleDelete(id: number): void {
@@ -67,7 +74,7 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <Form  id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit}/>
+        <Form  id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
         <Grid toDos={toDos} onDeleteToDo={handleDelete} onEditToDo={handleEdit}/>
       </div>
     </div>
