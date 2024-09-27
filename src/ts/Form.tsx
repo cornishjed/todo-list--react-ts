@@ -18,6 +18,11 @@ export const Form: React.FC<Props> = ({onSubmitToDo}) => {
     setDescription(e.target.value);
   }
 
+  function clearForm(): void {
+    setTitle("");
+    setDescription("");
+  }
+
   return (
     <div className="todo__form">
       <h3>Create To-Do</h3>
@@ -25,7 +30,7 @@ export const Form: React.FC<Props> = ({onSubmitToDo}) => {
       <input type="text" value={title} onChange={handleTitleChange} />
       <label htmlFor="desc">Description</label>
       <textarea value={description} onChange={handleDescriptionChange} />
-      <button disabled={title?.length ? false : true} onClick={() => onSubmitToDo(title, description)}>Create</button>
+      <button disabled={title?.length ? false : true} onClick={() => {onSubmitToDo(title, description), clearForm()}}>Create</button>
     </div>
   );
 }
