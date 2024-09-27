@@ -1,8 +1,8 @@
 import { ToDo } from "./ToDo"
-import { Props  as ToDoProps } from "./ToDo" ;
+import { ToDoItem } from "../App"
 
 interface Props {
-    toDos: Array<ToDoProps>;
+    toDos: Array<ToDoItem>;
     onDeleteToDo: (id: number) => void;
 }
 

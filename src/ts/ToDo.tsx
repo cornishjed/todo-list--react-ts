@@ -4,12 +4,11 @@ import "../css/ToDo.css";
 
 type oneChild = React.ReactNode
 
-export interface Props {
+interface Props {
     readonly id: number;
-    onDeleteToDo: (id: number) => void;
     title: string;
-    description?: string;
-    children?: oneChild;
+    children: oneChild; // description
+    onDeleteToDo: (id: number) => void;
 }
 
 export const ToDo: React.FC<Props> = ({id, onDeleteToDo, title, children}) => {

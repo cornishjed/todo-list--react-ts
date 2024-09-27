@@ -5,22 +5,24 @@ import "./css/App.css";
 
 import { Header } from "./ts/Header.tsx";
 import { Form } from "./ts/Form.tsx";
-import { Grid } from "./ts/Grid.tsx"
+import { Grid } from "./ts/Grid.tsx";
 
 let nextId: number = data.length;
+type oneChild = React.ReactNode;
 
-interface ToDo {
-  id: number;
+export interface ToDoItem {
+  readonly id: number;
   title: string;
-  description: string;
+  description?: string;
+  children?: oneChild;
 }
 
 function App() {
-  const [toDos, setToDos] = useState<Array<ToDo>>(data);
+  const [toDos, setToDos] = useState<Array<ToDoItem>>(data);
 
   // keep state altering functions close to state then pass as props
   function handleSubmit(title: string, description: string): void {
-    let newToDo: ToDo = {
+    let newToDo: ToDoItem = {
       id: ++nextId,
       title: title,
       description: description,
@@ -30,7 +32,7 @@ function App() {
   }
 
   function handleDelete(id: number): void {
-    const toDosCpy: Array<ToDo> = [...toDos];
+    const toDosCpy: Array<ToDoItem> = [...toDos];
     const index: number = toDosCpy.findIndex((item) => item.id === id);
 
     toDosCpy.splice(index, 1);
