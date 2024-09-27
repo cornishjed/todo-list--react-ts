@@ -11,7 +11,7 @@ let nextId: number = data.length;
 type oneChild = React.ReactNode;
 
 export interface ToDoItem {
-  readonly id: number;
+  readonly id: number | undefined;
   title: string;
   description?: string;
   children?: oneChild;
@@ -21,10 +21,12 @@ function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
+  const [editing, setEditing] = useState<boolean>(false);
+  const [editId, setEditId] = useState<number>();
 
   // keep state altering functions close to state then pass as props
-  function handleSubmit(title: string, description: string, id?: number): void {
-    if (!id) {
+  function handleSubmit(title: string, description: string): void {
+    if (!editing) {
       let newToDo: ToDoItem = {
         id: ++nextId,
         title: title,
@@ -33,16 +35,19 @@ function App() {
       setToDos([...toDos, newToDo]);
     } else {
       let updatedToDo: ToDoItem = {
-        id: id,
+        id: editId,
         title: title,
         description: description,
       };
-      setToDos([...toDos, updatedToDo]);
+      setToDos([...toDos.filter(item => item.id !== editId), updatedToDo]);
     }
   }
 
   function handleEdit(id: number): ToDoItem {
     const index: number = toDos.findIndex((item) => item.id === id);
+
+    setEditing(true);
+    setEditId(toDos[index].id)
     console.log("handleEdit()")
     console.log(index);
     setTitle(toDos[index].title);
@@ -62,7 +67,7 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <Form  title={title} description={description} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit}/>
+        <Form  id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit}/>
         <Grid toDos={toDos} onDeleteToDo={handleDelete} onEditToDo={handleEdit}/>
       </div>
     </div>

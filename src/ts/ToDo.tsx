@@ -5,7 +5,7 @@ import "../css/ToDo.css";
 type oneChild = React.ReactNode
 
 interface Props {
-    readonly id: number;
+    readonly id: number | undefined;
     title: string;
     children: oneChild; // description
     onEditToDo: Function;
