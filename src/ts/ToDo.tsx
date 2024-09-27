@@ -20,8 +20,8 @@ export const ToDo: React.FC<Props> = ({ id, editing, onEditToDo, onDeleteToDo, t
     <div className={"toDo__card " + (editing ? "editing" : "") + " " + (isComplete ? "complete" : "")}>
       <h1>{title}</h1>
       <p>{children}</p>
-      <div className="toDo__card-buttons">
-        <button onClick={() => onDeleteToDo(id)}>Delete</button>
+      <div className="toDo__card__buttons">
+        <button className="delete" onClick={() => onDeleteToDo(id)}>X</button>
         <button onClick={() => onEditToDo(id)}>{editing ? "Cancel" : "Edit"}</button>
         <button onClick={() => setIsComplete(!isComplete)}>Mark {isComplete ? "Incomplete" : "Complete"}</button>
       </div>

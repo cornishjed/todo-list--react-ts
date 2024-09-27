@@ -1,4 +1,5 @@
 .todo__form {
+  margin: 0 1vw;
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -6,6 +7,8 @@
     & > input,
     & > textarea {
       margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #cbcbcb;
     }
   
     & > button {
