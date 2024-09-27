@@ -40,9 +40,9 @@ function App() {
         description: description,
       };
 
-      let toDosCpy: ToDoItem[] = [...toDos].filter(item => item.id !== editId);
+      let toDosCpy: ToDoItem[] = [...toDos].filter((item) => item.id !== editId);
 
-      toDosCpy.push(updatedToDo)
+      toDosCpy.push(updatedToDo);
 
       // sort By Id
       toDosCpy.sort((a, b) => a.id! - b.id!); // '!' tells TS you're sure it's defined
@@ -53,13 +53,19 @@ function App() {
     }
   }
 
-  function handleEdit(id: number): void {
-    const index: number = toDos.findIndex((item) => item.id === id);
+  function handleEdit(id: number | boolean): void {
+    if (editing) {
+      setEditing(false);
+      setTitle("");
+      setDescription("");
+    } else {
+      const index: number = toDos.findIndex((item) => item.id === id);
 
-    setEditing(true);
-    setEditId(toDos[index].id)
-    setTitle(toDos[index].title);
-    setDescription(toDos[index].description!)
+      setEditing(true);
+      setEditId(toDos[index].id);
+      setTitle(toDos[index].title);
+      setDescription(toDos[index].description!);
+    }
   }
 
   function handleDelete(id: number): void {
@@ -74,8 +80,8 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <Form  id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
-        <Grid toDos={toDos} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
+        <Form id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
+        <Grid toDos={toDos} editing={editing} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
       </div>
     </div>
   );
