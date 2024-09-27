@@ -1,7 +1,6 @@
 import "../css/Form.css";
 
 interface Props {
-  id: number | undefined;
   title: string | undefined;
   description: string | undefined;
   editing: boolean;
@@ -10,18 +9,13 @@ interface Props {
   onSubmitToDo: Function;
 }
 
-export const Form: React.FC<Props> = ({ title, description, editing, setTitle, setDescription, onSubmitToDo, id }) => {
+export const Form: React.FC<Props> = ({ title, description, editing, setTitle, setDescription, onSubmitToDo }) => {
   function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setTitle(e.target.value);
   }
 
   function handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
     setDescription(e.target.value);
-  }
-
-  function clearForm(): void {
-    setTitle("");
-    setDescription("");
   }
 
   return (
@@ -31,15 +25,7 @@ export const Form: React.FC<Props> = ({ title, description, editing, setTitle, s
       <input type="text" value={title} onChange={handleTitleChange} />
       <label htmlFor="desc">Description</label>
       <textarea value={description} onChange={handleDescriptionChange} />
-      <button
-        disabled={title?.length ? false : true}
-        onClick={() => {
-          {
-            editing ? onSubmitToDo(title, description) : onSubmitToDo(title, description, id);
-          }
-          clearForm();
-        }}
-      >
+      <button disabled={title?.length ? false : true} onClick={() => onSubmitToDo()}>
         {editing ? "Apply" : "Create"}
       </button>
     </div>

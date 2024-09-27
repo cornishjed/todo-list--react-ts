@@ -24,8 +24,13 @@ function App() {
   const [editing, setEditing] = useState<boolean>(false);
   const [editId, setEditId] = useState<number>();
 
+  function clearForm(): void {
+    setTitle("");
+    setDescription("");
+  }
+
   // keep state altering functions close to state then pass as props
-  function handleSubmit(title: string, description: string): void {
+  function handleSubmit(): void {
     if (!editing) {
       let newToDo: ToDoItem = {
         id: ++nextId,
@@ -50,14 +55,14 @@ function App() {
       setToDos(toDosCpy);
       setEditId(undefined);
       setEditing(false);
+      clearForm();
     }
   }
 
   function handleEdit(id: number | boolean): void {
-    if (editing) {
+    if (editing && id === editId) {
       setEditing(false);
-      setTitle("");
-      setDescription("");
+      clearForm();
     } else {
       const index: number = toDos.findIndex((item) => item.id === id);
 
@@ -80,7 +85,7 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <Form id={editId} title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
+        <Form title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
         <Grid toDos={toDos} editing={editing} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
       </div>
     </div>
