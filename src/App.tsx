@@ -38,6 +38,7 @@ function App() {
         description: description,
       };
       setToDos([...toDos, newToDo]);
+      clearForm();
     } else {
       let updatedToDo: ToDoItem = {
         id: editId,
