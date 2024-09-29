@@ -14,6 +14,7 @@ export interface ToDoItem {
   id: number | undefined;
   title: string;
   description?: string;
+  completed: boolean;
   children?: oneChild;
 }
 
@@ -23,6 +24,7 @@ function App() {
   const [description, setDescription] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
   const [editId, setEditId] = useState<number>();
+  //const [completed, setCompleted] = useState<boolean>();
 
   function clearForm(): void {
     setTitle("");
@@ -36,6 +38,7 @@ function App() {
         id: ++nextId,
         title: title,
         description: description,
+        completed: false,
       };
       setToDos([...toDos, newToDo]);
       clearForm();
@@ -44,9 +47,12 @@ function App() {
         id: editId,
         title: title,
         description: description,
+        completed: false,
       };
 
-      let toDosCpy: ToDoItem[] = [...toDos].filter((item) => item.id !== editId);
+      let toDosCpy: ToDoItem[] = [...toDos].filter(
+        (item) => item.id !== editId
+      );
 
       toDosCpy.push(updatedToDo);
 
@@ -87,12 +93,24 @@ function App() {
       <Header />
       <div className="content">
         <div className="content__left">
-        <Form title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
+          <Form
+            title={title}
+            description={description}
+            editing={editing}
+            setTitle={setTitle}
+            setDescription={setDescription}
+            onSubmitToDo={handleSubmit}
+          />
         </div>
         <div className="content__right">
-          <Grid toDos={toDos} editing={editing} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
+          <Grid
+            toDos={toDos}
+            editing={editing}
+            editId={editId}
+            onDeleteToDo={handleDelete}
+            onEditToDo={handleEdit}
+          />
         </div>
-        
       </div>
     </div>
   );
