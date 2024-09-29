@@ -86,8 +86,13 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
+        <div className="content__left">
         <Form title={title} description={description} editing={editing} setTitle={setTitle} setDescription={setDescription} onSubmitToDo={handleSubmit} />
-        <Grid toDos={toDos} editing={editing} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
+        </div>
+        <div className="content__right">
+          <Grid toDos={toDos} editing={editing} editId={editId} onDeleteToDo={handleDelete} onEditToDo={handleEdit} />
+        </div>
+        
       </div>
     </div>
   );

@@ -1,5 +1,11 @@
 import { ToDo } from "./ToDo";
 import { ToDoItem } from "../App";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faGrip } from "@fortawesome/free-solid-svg-icons";
+
+const gridIcon = <FontAwesomeIcon icon={faGrip} />;
+const listIcon = <FontAwesomeIcon icon={faBars} />;
 
 interface Props {
   toDos: Array<ToDoItem>;
@@ -9,16 +15,52 @@ interface Props {
   onDeleteToDo: Function;
 }
 
-export const Grid: React.FC<Props> = ({ toDos, editing, editId, onEditToDo, onDeleteToDo }) => {
+export const Grid: React.FC<Props> = ({
+  toDos,
+  editing,
+  editId,
+  onEditToDo,
+  onDeleteToDo,
+}) => {
+  const [listLayout, setListLayout] = useState<boolean>(false);
+
   return (
-    <div className="toDo__grid">
-      {toDos.map(({ id, title, description }) => {
-        return (
-          <ToDo key={id} id={id} title={title} editing={id === editId && editing ? true : false} onEditToDo={onEditToDo} onDeleteToDo={onDeleteToDo}>
-            {description}
-          </ToDo>
-        );
-      })}
-    </div>
+    <>
+      <div className="layout-buttons">
+        <button
+          className={"layout-buttons__grid" + (!listLayout ? " selected" : "")}
+          onClick={() => {
+            setListLayout(false);
+          }}
+        >
+          {gridIcon}
+        </button>
+        <button
+          className={"layout-buttons__list" + (listLayout ? " selected" : "")}
+          onClick={() => {
+            setListLayout(true);
+          }}
+        >
+          {listIcon}
+        </button>
+      </div>
+      <div className={!listLayout ? "toDo--grid" : "toDo--list"}>
+        {toDos.map(({ id, title, description }) => {
+          return (
+            <ToDo
+              key={id}
+              id={id}
+              title={title}
+              editing={id === editId && editing ? true : false}
+              listLayout={listLayout}
+              onEditToDo={onEditToDo}
+              onDeleteToDo={onDeleteToDo}
+            >
+              {description}
+            </ToDo>
+          );
+        })}
+      </div>
+    </>
   );
 };

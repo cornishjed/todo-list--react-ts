@@ -16,11 +16,38 @@ body {
   justify-content: center;
   width: 100vw;
   gap: 5vw;
+
+  & .content__right {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
 }
 
-.toDo__grid {
+.layout-buttons {
+  margin: 0 5px;
+  & .layout-buttons__list,
+  & .layout-buttons__grid {
+    border-radius: 5px;
+    margin: 0 5px;
+    padding: 10px 15px;
+  }
+  & .selected {
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+}
+
+.toDo--grid {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  min-width: 42vw;
   max-width: 62vw;
+}
+
+.toDo--list {
+  display: flex;
+  flex-direction: column;
+  min-width: 42vw;
 }
