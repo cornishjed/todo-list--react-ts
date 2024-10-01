@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { FC, ReactNode, useState } from "react";
 
 import "../css/ToDo.css";
 
-type oneChild = React.ReactNode;
+type oneChild = ReactNode;
 
 interface Props {
   readonly id: number | undefined;
@@ -14,7 +14,7 @@ interface Props {
   onDeleteToDo: Function;
 }
 
-export const ToDo: React.FC<Props> = ({
+export const ToDo: FC<Props> = ({
   id,
   editing,
   listLayout,

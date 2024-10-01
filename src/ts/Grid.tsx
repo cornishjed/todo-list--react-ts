@@ -1,6 +1,6 @@
 import { ToDo } from "./ToDo";
 import { ToDoItem } from "../App";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faGrip } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,7 +15,7 @@ interface Props {
   onDeleteToDo: Function;
 }
 
-export const Grid: React.FC<Props> = ({
+export const Grid: FC<Props> = ({
   toDos,
   editing,
   editId,

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import "../css/Form.css";
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
   onSubmitToDo: Function;
 }
 
-export const Form: React.FC<Props> = ({ title, description, editing, setTitle, setDescription, onSubmitToDo }) => {
+export const Form: FC<Props> = ({ title, description, editing, setTitle, setDescription, onSubmitToDo }) => {
   function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setTitle(e.target.value);
   }
