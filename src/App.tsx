@@ -27,6 +27,8 @@ function App() {
   const [editId, setEditId] = useState(0);
   //const [completed, setCompleted] = useState<boolean>();
 
+  // create a useEffect() that updates data file on change of toDos
+
   function clearForm() {
     setTitle("");
     setDescription("");
