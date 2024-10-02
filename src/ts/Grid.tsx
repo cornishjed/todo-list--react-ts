@@ -45,12 +45,13 @@ export const Grid: FC<Props> = ({
         </button>
       </div>
       <div className={!listLayout ? "toDo--grid" : "toDo--list"}>
-        {toDos.map(({ id, title, description }) => {
+        {toDos.map(({ id, title, description, completed }) => {
           return (
             <ToDo
               key={id}
               id={id}
               title={title}
+              completed={completed}
               editing={id === editId && editing ? true : false}
               listLayout={listLayout}
               onEditToDo={onEditToDo}

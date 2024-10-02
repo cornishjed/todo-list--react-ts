@@ -54,14 +54,22 @@
   position: relative;
   border: 1px solid rgb(0, 0, 0);
   border-radius: 20px;
-  padding: 7px 27px;
+  padding: 0 27px;
   background-color: rgb(236, 243, 250);
   box-shadow: 1px 1px 1px 1px #858585;
   width: 39vw;
 
   & .heading {
     cursor: pointer;
-    margin: 0;
+    margin: 0 -27px;
+    width: 80%;
+    padding: 5px 28px;
+    background-image: linear-gradient(
+      to right,
+      rgba(182, 182, 182, 0.629) 80%,
+      rgba(255, 255, 255, 0)
+    );
+    border-radius: 20px 20px 20px 20px;
   }
 
   &:has(.description--expand) {
@@ -70,6 +78,12 @@
     align-items: flex-start;
     justify-content: flex-start;
     height: 182px;
+
+    & .heading {
+      width: 100%;
+      background-color: rgba(182, 182, 182, 0.629);
+      border-radius: 20px 20px 0 0;
+    }
 
     .toDo__card__buttons {
       display: flex;

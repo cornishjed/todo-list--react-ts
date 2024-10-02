@@ -13,8 +13,9 @@ body {
 
 .content {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   width: 100vw;
+  margin-left: 25vw;
   gap: 5vw;
 
   & .content__right {

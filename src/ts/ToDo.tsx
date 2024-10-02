@@ -7,6 +7,7 @@ type oneChild = ReactNode;
 interface Props {
   readonly id: number | undefined;
   title: string;
+  completed: boolean;
   editing: boolean;
   listLayout: boolean;
   children: oneChild; // description
@@ -17,13 +18,14 @@ interface Props {
 export const ToDo: FC<Props> = ({
   id,
   editing,
+  completed,
   listLayout,
   onEditToDo,
   onDeleteToDo,
   title,
   children,
 }) => {
-  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isComplete, setIsComplete] = useState<boolean>(completed);
   const [expand, setExpand] = useState<boolean>(false);
 
   return (
