@@ -7,9 +7,7 @@ import { Header } from "./ts/Header.tsx";
 import { Form } from "./ts/Form.tsx";
 import { Grid } from "./ts/Grid.tsx";
 
-let nextId: number = data.length;
 type oneChild = React.ReactNode;
-
 export interface ToDoItem {
   id: number | undefined;
   title: string;
@@ -17,20 +15,22 @@ export interface ToDoItem {
   children?: oneChild;
 }
 
+let nextId: number = data.length;
+
 function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
-  const [title, setTitle] = useState<string>(""); // Initialize to avoid "Component Changing Uncontrolled" error
-  const [description, setDescription] = useState<string>("");
-  const [editing, setEditing] = useState<boolean>(false);
+  const [title, setTitle] = useState(""); // Initialize to avoid "Component Changing Uncontrolled" error
+  const [description, setDescription] = useState("");
+  const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState<number>();
 
-  function clearForm(): void {
+  function clearForm() {
     setTitle("");
     setDescription("");
   }
 
   // keep state altering functions close to state then pass as props
-  function handleSubmit(): void {
+  function handleSubmit() {
     if (!editing) {
       let newToDo: ToDoItem = {
         id: ++nextId,
@@ -60,7 +60,7 @@ function App() {
     }
   }
 
-  function handleEdit(id: number | boolean): void {
+  function handleEdit<T>(id: T) {
     if (editing && id === editId) {
       setEditing(false);
       clearForm();
@@ -74,7 +74,7 @@ function App() {
     }
   }
 
-  function handleDelete(id: number): void {
+  function handleDelete(id: number) {
     const toDosCpy: Array<ToDoItem> = [...toDos];
     const index: number = toDosCpy.findIndex((item) => item.id === id);
 
