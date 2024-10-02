@@ -29,6 +29,7 @@ body {
   margin: 0 5px;
   & .layout-buttons__list,
   & .layout-buttons__grid {
+    border: none;
     border-radius: 5px;
     margin: 0 5px;
     padding: 10px 15px;

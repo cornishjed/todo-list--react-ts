@@ -10,7 +10,7 @@ const listIcon = <FontAwesomeIcon icon={faBars} />;
 interface Props {
   toDos: Array<ToDoItem>;
   editing: boolean;
-  editId: number | undefined;
+  editId: number;
   onEditToDo: Function;
   onDeleteToDo: Function;
 }

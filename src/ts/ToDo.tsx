@@ -5,7 +5,7 @@ import "../css/ToDo.css";
 type oneChild = ReactNode;
 
 interface Props {
-  readonly id: number | undefined;
+  readonly id: number;
   title: string;
   completed: boolean;
   editing: boolean;
@@ -25,8 +25,8 @@ export const ToDo: FC<Props> = ({
   title,
   children,
 }) => {
-  const [isComplete, setIsComplete] = useState<boolean>(completed);
-  const [expand, setExpand] = useState<boolean>(false);
+  const [isComplete, setIsComplete] = useState(completed);
+  const [expand, setExpand] = useState(false);
 
   return (
     <div

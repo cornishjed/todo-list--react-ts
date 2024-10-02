@@ -8,8 +8,9 @@ import { Form } from "./ts/Form.tsx";
 import { Grid } from "./ts/Grid.tsx";
 
 type oneChild = React.ReactNode;
+
 export interface ToDoItem {
-  id: number | undefined;
+  readonly id: number;
   title: string;
   description?: string;
   completed: boolean;
@@ -23,7 +24,7 @@ function App() {
   const [title, setTitle] = useState(""); // Initialize to avoid "Component Changing Uncontrolled" error
   const [description, setDescription] = useState("");
   const [editing, setEditing] = useState(false);
-  const [editId, setEditId] = useState<number>();
+  const [editId, setEditId] = useState(0);
   //const [completed, setCompleted] = useState<boolean>();
 
   function clearForm() {
@@ -60,7 +61,7 @@ function App() {
       toDosCpy.sort((a, b) => a.id! - b.id!); // '!' tells TS you're sure it's defined
 
       setToDos(toDosCpy);
-      setEditId(undefined);
+      setEditId(0);
       setEditing(false);
       clearForm();
     }

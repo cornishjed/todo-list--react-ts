@@ -2,8 +2,8 @@ import { FC } from "react";
 import "../css/Form.css";
 
 interface Props {
-  title: string | undefined;
-  description: string | undefined;
+  title: string;
+  description?: string;
   editing: boolean;
   setTitle: Function;
   setDescription: Function;
@@ -11,11 +11,11 @@ interface Props {
 }
 
 export const Form: FC<Props> = ({ title, description, editing, setTitle, setDescription, onSubmitToDo }) => {
-  function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTitle(e.target.value);
   }
 
-  function handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
+  function handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setDescription(e.target.value);
   }
 
