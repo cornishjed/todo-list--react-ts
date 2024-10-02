@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import data from "./data.json";
 import "./css/App.css";
@@ -6,6 +6,8 @@ import "./css/App.css";
 import { Header } from "./ts/Header.tsx";
 import { Form } from "./ts/Form.tsx";
 import { Grid } from "./ts/Grid.tsx";
+import fs from "fs";
+import path from "path";
 
 type oneChild = React.ReactNode;
 
@@ -28,6 +30,10 @@ function App() {
   //const [completed, setCompleted] = useState<boolean>();
 
   // create a useEffect() that updates data file on change of toDos
+  useEffect(() => {
+    // may have to save until routing
+    console.log(toDos);
+  }, [toDos]);
 
   function clearForm() {
     setTitle("");
