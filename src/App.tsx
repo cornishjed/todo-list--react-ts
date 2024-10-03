@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 import data from "./data.json";
 import "./css/App.css";
@@ -6,8 +6,8 @@ import "./css/App.css";
 import { Header } from "./ts/Header.tsx";
 import { Form } from "./ts/Form.tsx";
 import { Grid } from "./ts/Grid.tsx";
-import fs from "fs";
-import path from "path";
+
+import {initialFormState, formReducer } from "./formReducer.tsx";
 
 type oneChild = React.ReactNode;
 
@@ -23,11 +23,9 @@ let nextId: number = data.length;
 
 function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
-  const [title, setTitle] = useState(""); // Initialize to avoid "Component Changing Uncontrolled" error
-  const [description, setDescription] = useState("");
   const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState(0);
-  //const [completed, setCompleted] = useState<boolean>();
+  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
 
   // create a useEffect() that updates data file on change of toDos
   useEffect(() => {
@@ -35,27 +33,22 @@ function App() {
     console.log(toDos);
   }, [toDos]);
 
-  function clearForm() {
-    setTitle("");
-    setDescription("");
-  }
-
   // keep state altering functions close to state then pass as props
   function handleSubmit() {
     if (!editing) {
       let newToDo: ToDoItem = {
         id: ++nextId,
-        title: title,
-        description: description,
+        title: formState.title,
+        description: formState.description,
         completed: false,
       };
       setToDos([...toDos, newToDo]);
-      clearForm();
+      formDispatch({ type: "clear"})
     } else {
       let updatedToDo: ToDoItem = {
         id: editId,
-        title: title,
-        description: description,
+        title: formState.title,
+        description: formState.description,
         completed: false,
       };
 
@@ -71,21 +64,21 @@ function App() {
       setToDos(toDosCpy);
       setEditId(0);
       setEditing(false);
-      clearForm();
+      formDispatch({ type: "clear"})
     }
   }
 
   function handleEdit<T>(id: T) {
     if (editing && id === editId) {
       setEditing(false);
-      clearForm();
+      formDispatch({ type: "clear"})
     } else {
       const index: number = toDos.findIndex((item) => item.id === id);
 
       setEditing(true);
       setEditId(toDos[index].id);
-      setTitle(toDos[index].title);
-      setDescription(toDos[index].description!);
+
+      formDispatch({data: {title: toDos[index].title, description: toDos[index].description}, type: "edit"});
     }
   }
 
@@ -103,11 +96,9 @@ function App() {
       <div className="content">
         <div className="content__left">
           <Form
-            title={title}
-            description={description}
             editing={editing}
-            setTitle={setTitle}
-            setDescription={setDescription}
+            formState={formState}
+            formDispatch={formDispatch}
             onSubmitToDo={handleSubmit}
           />
         </div>
