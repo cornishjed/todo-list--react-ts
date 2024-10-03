@@ -9,16 +9,17 @@ const listIcon = <FontAwesomeIcon icon={faBars} />;
 
 interface Props {
   toDos: Array<ToDoItem>;
-  editing: boolean;
-  editId: number;
+  editState: {
+    editing: boolean,
+    editId: number
+  };
   onEditToDo: Function;
   onDeleteToDo: Function;
 }
 
 export const Grid: FC<Props> = ({
   toDos,
-  editing,
-  editId,
+  editState: {editing, editId},
   onEditToDo,
   onDeleteToDo,
 }) => {

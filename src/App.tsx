@@ -8,6 +8,7 @@ import { Form } from "./ts/Form.tsx";
 import { Grid } from "./ts/Grid.tsx";
 
 import {initialFormState, formReducer } from "./formReducer.tsx";
+import {initialEditState, editReducer} from "./editReducer.tsx";
 
 type oneChild = React.ReactNode;
 
@@ -23,8 +24,7 @@ let nextId: number = data.length;
 
 function App() {
   const [toDos, setToDos] = useState<ToDoItem[]>(data);
-  const [editing, setEditing] = useState(false);
-  const [editId, setEditId] = useState(0);
+  const [editState, editDispatch] = useReducer(editReducer, initialEditState);
   const [formState, formDispatch] = useReducer(formReducer, initialFormState);
 
   // create a useEffect() that updates data file on change of toDos
@@ -35,7 +35,7 @@ function App() {
 
   // keep state altering functions close to state then pass as props
   function handleSubmit() {
-    if (!editing) {
+    if (!editState.editing) {
       let newToDo: ToDoItem = {
         id: ++nextId,
         title: formState.title,
@@ -46,14 +46,14 @@ function App() {
       formDispatch({ type: "clear"})
     } else {
       let updatedToDo: ToDoItem = {
-        id: editId,
+        id: editState.editId,
         title: formState.title,
         description: formState.description,
         completed: false,
       };
 
       let toDosCpy: ToDoItem[] = [...toDos].filter(
-        (item) => item.id !== editId
+        (item) => item.id !== editState.editId
       );
 
       toDosCpy.push(updatedToDo);
@@ -62,22 +62,19 @@ function App() {
       toDosCpy.sort((a, b) => a.id! - b.id!); // '!' tells TS you're sure it's defined
 
       setToDos(toDosCpy);
-      setEditId(0);
-      setEditing(false);
+      editDispatch({type: "end"})
       formDispatch({ type: "clear"})
     }
   }
 
   function handleEdit<T>(id: T) {
-    if (editing && id === editId) {
-      setEditing(false);
+    if (editState.editing && id === editState.editId) {
+      editDispatch({type: "end"});
       formDispatch({ type: "clear"})
     } else {
       const index: number = toDos.findIndex((item) => item.id === id);
 
-      setEditing(true);
-      setEditId(toDos[index].id);
-
+      editDispatch({id: toDos[index].id, type: "start"})
       formDispatch({data: {title: toDos[index].title, description: toDos[index].description}, type: "edit"});
     }
   }
@@ -96,7 +93,7 @@ function App() {
       <div className="content">
         <div className="content__left">
           <Form
-            editing={editing}
+            editing={editState.editing}
             formState={formState}
             formDispatch={formDispatch}
             onSubmitToDo={handleSubmit}
@@ -105,8 +102,7 @@ function App() {
         <div className="content__right">
           <Grid
             toDos={toDos}
-            editing={editing}
-            editId={editId}
+            editState={editState}
             onDeleteToDo={handleDelete}
             onEditToDo={handleEdit}
           />
